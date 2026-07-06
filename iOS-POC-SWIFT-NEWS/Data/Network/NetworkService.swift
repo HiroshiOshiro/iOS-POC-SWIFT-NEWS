@@ -1,4 +1,5 @@
 import Foundation
+import os
 
 protocol Endpoint {
     var url: URL { get }
@@ -27,6 +28,7 @@ enum NetworkError: Error, LocalizedError {
 
 final class NetworkService {
     private let session: URLSession
+    private let logger = Logger(subsystem: "com.hiroshioshiro.iOSPOCSWIFTNEWS", category: "Network")
 
     init(session: URLSession = .shared) {
         self.session = session
@@ -40,16 +42,46 @@ final class NetworkService {
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
 
-        let (data, response) = try await session.data(for: urlRequest)
+        logRequest(urlRequest)
 
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NetworkError.invalidResponse
-        }
-        guard (200..<300).contains(httpResponse.statusCode) else {
-            throw NetworkError.httpStatus(httpResponse.statusCode)
-        }
+        do {
+            let (data, response) = try await session.data(for: urlRequest)
+            let httpResponse = response as? HTTPURLResponse
+            logResponse(urlRequest, httpResponse, data)
 
-        return try decoder.decode(T.self, from: data)
+            guard let httpResponse else {
+                throw NetworkError.invalidResponse
+            }
+            guard (200..<300).contains(httpResponse.statusCode) else {
+                throw NetworkError.httpStatus(httpResponse.statusCode)
+            }
+
+            return try decoder.decode(T.self, from: data)
+        } catch {
+            logger.error("⬅️ [Network] \(urlRequest.httpMethod ?? "GET") \(urlRequest.url?.absoluteString ?? "") failed: \(error.localizedDescription, privacy: .public)")
+            throw error
+        }
+    }
+
+    private func logRequest(_ request: URLRequest) {
+        let method = request.httpMethod ?? "GET"
+        let url = request.url?.absoluteString ?? ""
+        var message = "➡️ [Network] \(method) \(url)"
+        if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
+            message += "\nBody: \(bodyString)"
+        }
+        logger.debug("\(message, privacy: .public)")
+    }
+
+    private func logResponse(_ request: URLRequest, _ response: HTTPURLResponse?, _ data: Data) {
+        let method = request.httpMethod ?? "GET"
+        let url = request.url?.absoluteString ?? ""
+        let status = response.map { "\($0.statusCode)" } ?? "unknown"
+        var message = "⬅️ [Network] \(method) \(url) -> \(status)"
+        if let bodyString = String(data: data, encoding: .utf8) {
+            message += "\nResponse: \(bodyString)"
+        }
+        logger.debug("\(message, privacy: .public)")
     }
 
     static let defaultDecoder: JSONDecoder = {
