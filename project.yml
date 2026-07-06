@@ -1,0 +1,31 @@
+name: iOS-POC-SWIFT-NEWS
+options:
+  bundleIdPrefix: com.hiroshioshiro
+  deploymentTarget:
+    iOS: "15.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  iOS-POC-SWIFT-NEWS:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: iOS-POC-SWIFT-NEWS
+    resources:
+      - path: iOS-POC-SWIFT-NEWS/Resources/Assets.xcassets
+    info:
+      path: Generated/Info.plist
+      properties:
+        UILaunchScreen: {}
+        CFBundleDisplayName: NewsPOC
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.hiroshioshiro.iOSPOCSWIFTNEWS
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
