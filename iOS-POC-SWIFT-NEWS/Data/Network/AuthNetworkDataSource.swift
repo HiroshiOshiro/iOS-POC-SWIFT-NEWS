@@ -5,12 +5,6 @@ private struct LoginRequestBody: Encodable {
     let password: String
 }
 
-private struct LoginResponseDTO: Decodable {
-    let id: String
-    let name: String
-    let email: String
-}
-
 private struct LoginEndpoint: Endpoint {
     let email: String
     let password: String
@@ -22,7 +16,7 @@ private struct LoginEndpoint: Endpoint {
     }
 }
 
-final class AuthAPIClient: AuthRepository {
+final class AuthNetworkDataSource {
     private let networkService: NetworkService
 
     init() {
@@ -31,12 +25,7 @@ final class AuthAPIClient: AuthRepository {
         self.networkService = NetworkService(session: URLSession(configuration: configuration))
     }
 
-    func login(email: String, password: String) async throws -> User {
-        do {
-            let dto: LoginResponseDTO = try await networkService.request(LoginEndpoint(email: email, password: password))
-            return User(id: dto.id, name: dto.name, email: dto.email)
-        } catch NetworkError.httpStatus(401) {
-            throw AuthError.invalidCredentials
-        }
+    func login(email: String, password: String) async throws -> LoginResponseDTO {
+        try await networkService.request(LoginEndpoint(email: email, password: password))
     }
 }

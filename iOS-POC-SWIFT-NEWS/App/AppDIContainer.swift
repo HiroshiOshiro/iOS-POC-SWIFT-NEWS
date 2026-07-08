@@ -5,9 +5,12 @@ final class AppDIContainer {
     private let networkService = NetworkService()
     private let coreDataStack = CoreDataStack()
 
-    private lazy var newsRepository: NewsRepository = HackerNewsAPIClient(networkService: networkService)
+    private lazy var hackerNewsNetworkDataSource = HackerNewsNetworkDataSource(networkService: networkService)
+    private lazy var authNetworkDataSource = AuthNetworkDataSource()
+
+    private lazy var newsRepository: NewsRepository = NewsRepositoryImpl(dataSource: hackerNewsNetworkDataSource)
     private lazy var favoritesRepository: FavoritesRepository = FavoritesRepositoryImpl(coreDataStack: coreDataStack)
-    private lazy var authRepository: AuthRepository = AuthAPIClient()
+    private lazy var authRepository: AuthRepository = AuthRepositoryImpl(dataSource: authNetworkDataSource)
 
     private lazy var fetchTopNewsUseCase: FetchTopNewsUseCase = FetchTopNewsUseCaseImpl(newsRepository: newsRepository)
     private lazy var fetchFavoriteIDsUseCase: FetchFavoriteIDsUseCase = FetchFavoriteIDsUseCaseImpl(favoritesRepository: favoritesRepository)
