@@ -15,7 +15,7 @@ public struct FavoritesListView: View {
     public var body: some View {
         NavigationView {
             Group {
-                if viewModel.favorites.isEmpty && !viewModel.isLoading {
+                if viewModel.favorites.isEmpty {
                     Text("お気に入りはまだありません")
                         .foregroundColor(.secondary)
                 } else {
@@ -40,12 +40,6 @@ public struct FavoritesListView: View {
                 }
             }
             .navigationTitle("お気に入り")
-            .task {
-                await viewModel.load()
-            }
-            .refreshable {
-                await viewModel.load()
-            }
             .alert("エラー", isPresented: Binding(
                 get: { viewModel.errorMessage != nil },
                 set: { if !$0 { viewModel.errorMessage = nil } }

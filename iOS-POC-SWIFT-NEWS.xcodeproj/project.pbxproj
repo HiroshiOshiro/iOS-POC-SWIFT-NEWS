@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02E5870EC628E4A91B003637 /* CoreDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 701494163115EDB1ACAACE09 /* CoreDatabase */; };
+		4580E28829D4F2DA5EBB4366 /* CoreDesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 70BD74CEC8D44FBC851484A1 /* CoreDesignSystem */; };
 		4AE336547FCC8693AAD64DEB /* CoreNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = D079C5A8640D6E4463B47706 /* CoreNetwork */; };
 		5FE7E144F4674B46C2DF69C8 /* iOS_POC_SWIFT_NEWSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FD21E1837A4B229996C9D /* iOS_POC_SWIFT_NEWSApp.swift */; };
 		6490A96F480094F5DF00BAD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 591DD229D8A3692EFEE41917 /* Assets.xcassets */; };
@@ -15,10 +16,11 @@
 		8FE07F4A11F5078B2346A4F7 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D39CEBBA09DF200F78463F /* AppDIContainer.swift */; };
 		9C1C1510EDA5A2690B01BF79 /* FeatureNews in Frameworks */ = {isa = PBXBuildFile; productRef = 91FF66035DB6C46B99999CD4 /* FeatureNews */; };
 		9D8D5C85FDB87A072A69ADE4 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E093D95493CA3873ADFB0F2 /* RootTabView.swift */; };
-		C97A03BEAF326EAD60E80F6E /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = 19B08F04949ED736AB7B4FDD /* CoreUI */; };
+		A0506E51E7466F1832B15081 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = 19B08F04949ED736AB7B4FDD /* CoreUI */; };
+		C97A03BEAF326EAD60E80F6E /* CoreModel in Frameworks */ = {isa = PBXBuildFile; productRef = 829D76A45419A669CCE88229 /* CoreModel */; };
 		D45D6D4BD81130D76BF4645B /* FeatureFavorites in Frameworks */ = {isa = PBXBuildFile; productRef = B26834A9C8D12AB4B0BF69AA /* FeatureFavorites */; };
 		F018069A2FE5093B3981F9D3 /* FeatureSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 6809C88D7D29C61292590EAB /* FeatureSettings */; };
-		F9C7761C8794670EE4F8570C /* CoreModel in Frameworks */ = {isa = PBXBuildFile; productRef = 829D76A45419A669CCE88229 /* CoreModel */; };
+		F9C7761C8794670EE4F8570C /* CoreDataStore in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD7C9CC99E2215179528BDA /* CoreDataStore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,8 +43,10 @@
 				8493B4D3AF37736A113A0797 /* CoreRepository in Frameworks */,
 				4AE336547FCC8693AAD64DEB /* CoreNetwork in Frameworks */,
 				02E5870EC628E4A91B003637 /* CoreDatabase in Frameworks */,
-				F9C7761C8794670EE4F8570C /* CoreModel in Frameworks */,
-				C97A03BEAF326EAD60E80F6E /* CoreUI in Frameworks */,
+				F9C7761C8794670EE4F8570C /* CoreDataStore in Frameworks */,
+				C97A03BEAF326EAD60E80F6E /* CoreModel in Frameworks */,
+				A0506E51E7466F1832B15081 /* CoreUI in Frameworks */,
+				4580E28829D4F2DA5EBB4366 /* CoreDesignSystem in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,8 +128,10 @@
 				482ACD8CB3EDD4663BBEABC0 /* CoreRepository */,
 				D079C5A8640D6E4463B47706 /* CoreNetwork */,
 				701494163115EDB1ACAACE09 /* CoreDatabase */,
+				9FD7C9CC99E2215179528BDA /* CoreDataStore */,
 				829D76A45419A669CCE88229 /* CoreModel */,
 				19B08F04949ED736AB7B4FDD /* CoreUI */,
+				70BD74CEC8D44FBC851484A1 /* CoreDesignSystem */,
 			);
 			productName = "iOS-POC-SWIFT-NEWS";
 			productReference = 5E1640666F41BECBF7812038 /* iOS-POC-SWIFT-NEWS.app */;
@@ -397,6 +403,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = CoreDatabase;
 		};
+		70BD74CEC8D44FBC851484A1 /* CoreDesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CoreDesignSystem;
+		};
 		829D76A45419A669CCE88229 /* CoreModel */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CoreModel;
@@ -404,6 +414,10 @@
 		91FF66035DB6C46B99999CD4 /* FeatureNews */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FeatureNews;
+		};
+		9FD7C9CC99E2215179528BDA /* CoreDataStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CoreDataStore;
 		};
 		B26834A9C8D12AB4B0BF69AA /* FeatureFavorites */ = {
 			isa = XCSwiftPackageProductDependency;

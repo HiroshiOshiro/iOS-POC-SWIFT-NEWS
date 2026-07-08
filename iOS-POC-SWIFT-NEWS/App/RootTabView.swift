@@ -21,7 +21,10 @@ struct RootTabView: View {
                     Label("お気に入り", systemImage: "star")
                 }
 
-            SettingsRootView(authRepository: container.authRepository)
+            SettingsRootView(
+                authRepository: container.authRepository,
+                userDataRepository: container.userDataRepository
+            )
                 .tabItem {
                     Label("Setting", systemImage: "gearshape")
                 }

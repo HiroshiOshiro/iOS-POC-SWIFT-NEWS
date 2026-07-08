@@ -10,19 +10,21 @@ public final class LoginViewModel: ObservableObject {
     @Published public var errorMessage: String?
 
     private let authRepository: AuthRepository
+    private let userDataRepository: UserDataRepository
 
-    public init(authRepository: AuthRepository) {
+    public init(authRepository: AuthRepository, userDataRepository: UserDataRepository) {
         self.authRepository = authRepository
+        self.userDataRepository = userDataRepository
     }
 
-    public func login() async -> User? {
+    public func login() async {
         isLoading = true
         defer { isLoading = false }
         do {
-            return try await authRepository.login(email: email, password: password)
+            let user = try await authRepository.login(email: email, password: password)
+            userDataRepository.saveCurrentUser(user)
         } catch {
             errorMessage = error.localizedDescription
-            return nil
         }
     }
 }

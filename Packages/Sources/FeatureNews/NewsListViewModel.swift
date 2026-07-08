@@ -11,20 +11,28 @@ public final class NewsListViewModel: ObservableObject {
 
     private let newsRepository: NewsRepository
     private let favoritesRepository: FavoritesRepository
+    private var observeFavoriteIDsTask: Task<Void, Never>?
 
     public init(newsRepository: NewsRepository, favoritesRepository: FavoritesRepository) {
         self.newsRepository = newsRepository
         self.favoritesRepository = favoritesRepository
+        observeFavoriteIDsTask = Task { [weak self] in
+            guard let self else { return }
+            for await ids in favoritesRepository.observeFavoriteIDs() {
+                self.favoriteIDs = ids
+            }
+        }
+    }
+
+    deinit {
+        observeFavoriteIDsTask?.cancel()
     }
 
     public func load() async {
         isLoading = true
         defer { isLoading = false }
         do {
-            async let articlesResult = newsRepository.fetchTopStories(limit: 30)
-            async let favoriteIDsResult = favoritesRepository.fetchFavoriteIDs()
-            articles = try await articlesResult
-            favoriteIDs = try await favoriteIDsResult
+            articles = try await newsRepository.fetchTopStories(limit: 30)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -38,10 +46,8 @@ public final class NewsListViewModel: ObservableObject {
         do {
             if isFavorite(article) {
                 try await favoritesRepository.removeFavorite(id: article.id)
-                favoriteIDs.remove(article.id)
             } else {
                 try await favoritesRepository.addFavorite(article)
-                favoriteIDs.insert(article.id)
             }
         } catch {
             errorMessage = error.localizedDescription

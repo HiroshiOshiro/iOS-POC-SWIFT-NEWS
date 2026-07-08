@@ -1,5 +1,6 @@
 import SwiftUI
 import CoreModel
+import CoreDesignSystem
 
 public struct NewsRow: View {
     let article: NewsArticle
@@ -25,11 +26,7 @@ public struct NewsRow: View {
 
             Spacer()
 
-            Button(action: onToggleFavorite) {
-                Image(systemName: isFavorite ? "star.fill" : "star")
-                    .foregroundColor(isFavorite ? .yellow : .gray)
-            }
-            .buttonStyle(.plain)
+            FavoriteButton(isFavorite: isFavorite, action: onToggleFavorite)
         }
         .padding(.vertical, 4)
     }

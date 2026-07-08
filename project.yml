@@ -32,8 +32,10 @@ targets:
           - CoreRepository
           - CoreNetwork
           - CoreDatabase
+          - CoreDataStore
           - CoreModel
           - CoreUI
+          - CoreDesignSystem
     info:
       path: Generated/Info.plist
       properties:

@@ -1,6 +1,7 @@
 import SwiftUI
 import CoreModel
 import CoreRepository
+import CoreDesignSystem
 
 public struct NewsDetailView: View {
     @StateObject private var viewModel: NewsDetailViewModel
@@ -44,11 +45,8 @@ public struct NewsDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
+                FavoriteButton(isFavorite: viewModel.isFavorite) {
                     Task { await viewModel.toggleFavorite() }
-                } label: {
-                    Image(systemName: viewModel.isFavorite ? "star.fill" : "star")
-                        .foregroundColor(viewModel.isFavorite ? .yellow : .gray)
                 }
             }
         }

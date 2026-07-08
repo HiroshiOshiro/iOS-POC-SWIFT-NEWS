@@ -1,6 +1,6 @@
 import Foundation
 
-public struct NewsArticle: Identifiable, Equatable, Hashable {
+public struct NewsArticle: Identifiable, Equatable, Hashable, Sendable {
     public let id: Int
     public let title: String
     public let url: URL?

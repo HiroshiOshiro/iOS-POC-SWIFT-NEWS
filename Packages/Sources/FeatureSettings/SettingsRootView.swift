@@ -3,29 +3,23 @@ import CoreRepository
 
 public struct SettingsRootView: View {
     private let authRepository: AuthRepository
+    private let userDataRepository: UserDataRepository
+    @StateObject private var viewModel: SettingsRootViewModel
 
-    @AppStorage("isLoggedIn") private var isLoggedIn: Bool = false
-    @AppStorage("loggedInUserName") private var loggedInUserName: String = ""
-    @AppStorage("loggedInUserEmail") private var loggedInUserEmail: String = ""
-
-    public init(authRepository: AuthRepository) {
+    public init(authRepository: AuthRepository, userDataRepository: UserDataRepository) {
         self.authRepository = authRepository
+        self.userDataRepository = userDataRepository
+        _viewModel = StateObject(wrappedValue: SettingsRootViewModel(userDataRepository: userDataRepository))
     }
 
     public var body: some View {
         NavigationView {
-            if isLoggedIn {
-                UserProfileView(name: loggedInUserName, email: loggedInUserEmail) {
-                    isLoggedIn = false
-                    loggedInUserName = ""
-                    loggedInUserEmail = ""
+            if let user = viewModel.currentUser {
+                UserProfileView(name: user.name, email: user.email) {
+                    viewModel.logout()
                 }
             } else {
-                LoginView(authRepository: authRepository) { user in
-                    loggedInUserName = user.name
-                    loggedInUserEmail = user.email
-                    isLoggedIn = true
-                }
+                LoginView(authRepository: authRepository, userDataRepository: userDataRepository)
             }
         }
         .navigationViewStyle(.stack)

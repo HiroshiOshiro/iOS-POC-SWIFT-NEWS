@@ -4,11 +4,12 @@ import CoreRepository
 
 public struct LoginView: View {
     @StateObject private var viewModel: LoginViewModel
-    let onLoginSuccess: (User) -> Void
 
-    public init(authRepository: AuthRepository, onLoginSuccess: @escaping (User) -> Void) {
-        _viewModel = StateObject(wrappedValue: LoginViewModel(authRepository: authRepository))
-        self.onLoginSuccess = onLoginSuccess
+    public init(authRepository: AuthRepository, userDataRepository: UserDataRepository) {
+        _viewModel = StateObject(wrappedValue: LoginViewModel(
+            authRepository: authRepository,
+            userDataRepository: userDataRepository
+        ))
     }
 
     public var body: some View {
@@ -27,11 +28,7 @@ public struct LoginView: View {
 
             Section {
                 Button {
-                    Task {
-                        if let user = await viewModel.login() {
-                            onLoginSuccess(user)
-                        }
-                    }
+                    Task { await viewModel.login() }
                 } label: {
                     if viewModel.isLoading {
                         ProgressView()

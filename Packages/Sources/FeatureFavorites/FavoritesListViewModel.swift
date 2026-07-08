@@ -5,29 +5,28 @@ import CoreRepository
 @MainActor
 public final class FavoritesListViewModel: ObservableObject {
     @Published public private(set) var favorites: [NewsArticle] = []
-    @Published public private(set) var isLoading = false
     @Published public var errorMessage: String?
 
     private let favoritesRepository: FavoritesRepository
+    private var observeTask: Task<Void, Never>?
 
     public init(favoritesRepository: FavoritesRepository) {
         self.favoritesRepository = favoritesRepository
+        observeTask = Task { [weak self] in
+            guard let self else { return }
+            for await favorites in favoritesRepository.observeFavorites() {
+                self.favorites = favorites
+            }
+        }
     }
 
-    public func load() async {
-        isLoading = true
-        defer { isLoading = false }
-        do {
-            favorites = try await favoritesRepository.fetchAllFavorites()
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+    deinit {
+        observeTask?.cancel()
     }
 
     public func removeFavorite(_ article: NewsArticle) async {
         do {
             try await favoritesRepository.removeFavorite(id: article.id)
-            favorites.removeAll { $0.id == article.id }
         } catch {
             errorMessage = error.localizedDescription
         }
