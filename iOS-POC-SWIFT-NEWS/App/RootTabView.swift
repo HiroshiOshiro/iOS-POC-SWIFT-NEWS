@@ -1,21 +1,27 @@
 import SwiftUI
+import FeatureNews
+import FeatureFavorites
+import FeatureSettings
 
 struct RootTabView: View {
     let container: AppDIContainer
 
     var body: some View {
         TabView {
-            NewsListView(container: container)
-                .tabItem {
-                    Label("News", systemImage: "newspaper")
-                }
+            NewsListView(
+                newsRepository: container.newsRepository,
+                favoritesRepository: container.favoritesRepository
+            )
+            .tabItem {
+                Label("News", systemImage: "newspaper")
+            }
 
-            FavoritesListView(container: container)
+            FavoritesListView(favoritesRepository: container.favoritesRepository)
                 .tabItem {
                     Label("お気に入り", systemImage: "star")
                 }
 
-            SettingsRootView(container: container)
+            SettingsRootView(authRepository: container.authRepository)
                 .tabItem {
                     Label("Setting", systemImage: "gearshape")
                 }

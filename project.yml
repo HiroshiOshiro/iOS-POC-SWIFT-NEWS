@@ -10,6 +10,10 @@ settings:
     DEVELOPMENT_TEAM: ""
     CODE_SIGN_STYLE: Automatic
 
+packages:
+  AppPackages:
+    path: Packages
+
 targets:
   iOS-POC-SWIFT-NEWS:
     type: application
@@ -19,6 +23,17 @@ targets:
       - path: iOS-POC-SWIFT-NEWS
     resources:
       - path: iOS-POC-SWIFT-NEWS/Resources/Assets.xcassets
+    dependencies:
+      - package: AppPackages
+        products:
+          - FeatureNews
+          - FeatureFavorites
+          - FeatureSettings
+          - CoreRepository
+          - CoreNetwork
+          - CoreDatabase
+          - CoreModel
+          - CoreUI
     info:
       path: Generated/Info.plist
       properties:
