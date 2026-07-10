@@ -4,7 +4,7 @@ import CoreRepository
 
 @MainActor
 public final class FavoritesListViewModel: ObservableObject {
-    @Published public private(set) var favorites: [NewsArticle] = []
+    @Published public private(set) var uiState: FavoritesUiState = .loading
     @Published public var errorMessage: String?
 
     private let favoritesRepository: FavoritesRepository
@@ -15,7 +15,7 @@ public final class FavoritesListViewModel: ObservableObject {
         observeTask = Task { [weak self] in
             guard let self else { return }
             for await favorites in favoritesRepository.observeFavorites() {
-                self.favorites = favorites
+                self.uiState = favorites.isEmpty ? .empty : .success(favorites)
             }
         }
     }

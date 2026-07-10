@@ -1,17 +1,17 @@
 import SwiftUI
 
-public struct UserProfileView: View {
+struct UserProfileView: View {
     let name: String
     let email: String
     let onLogout: () -> Void
 
-    public init(name: String, email: String, onLogout: @escaping () -> Void) {
+    init(name: String, email: String, onLogout: @escaping () -> Void) {
         self.name = name
         self.email = email
         self.onLogout = onLogout
     }
 
-    public var body: some View {
+    var body: some View {
         Form {
             Section {
                 HStack(spacing: 16) {

@@ -4,9 +4,11 @@ import CoreRepository
 
 @MainActor
 public final class NewsListViewModel: ObservableObject {
-    @Published public private(set) var articles: [NewsArticle] = []
+    @Published public private(set) var uiState: NewsListUiState = .loading
+    // お気に入り状態はページ読み込みとは独立して継続的に変化するため、
+    // uiStateには含めずFavoritesRepositoryのストリームを直接反映する
     @Published public private(set) var favoriteIDs: Set<Int> = []
-    @Published public private(set) var isLoading = false
+    // お気に入りトグル失敗など一過性のイベント用。uiStateとは別チャンネルで扱う(NiAのSnackbarメッセージ相当)
     @Published public var errorMessage: String?
 
     private let newsRepository: NewsRepository
@@ -29,12 +31,12 @@ public final class NewsListViewModel: ObservableObject {
     }
 
     public func load() async {
-        isLoading = true
-        defer { isLoading = false }
+        uiState = .loading
         do {
-            articles = try await newsRepository.fetchTopStories(limit: 30)
+            let articles = try await newsRepository.fetchTopStories(limit: 30)
+            uiState = .success(articles)
         } catch {
-            errorMessage = error.localizedDescription
+            uiState = .failure(error.localizedDescription)
         }
     }
 

@@ -3,52 +3,59 @@ import CoreModel
 import CoreRepository
 import CoreUI
 
-public struct FavoritesListView: View {
+// FavoritesNavigation.screen(...) 経由でのみ生成する
+struct FavoritesListView: View {
     private let favoritesRepository: FavoritesRepository
     @StateObject private var viewModel: FavoritesListViewModel
 
-    public init(favoritesRepository: FavoritesRepository) {
+    init(favoritesRepository: FavoritesRepository) {
         self.favoritesRepository = favoritesRepository
         _viewModel = StateObject(wrappedValue: FavoritesListViewModel(favoritesRepository: favoritesRepository))
     }
 
-    public var body: some View {
+    var body: some View {
         NavigationView {
-            Group {
-                if viewModel.favorites.isEmpty {
-                    Text("お気に入りはまだありません")
-                        .foregroundColor(.secondary)
-                } else {
-                    List(viewModel.favorites) { article in
-                        NavigationLink {
-                            NewsDetailView(
-                                article: article,
-                                isFavorite: true,
-                                favoritesRepository: favoritesRepository
-                            )
-                        } label: {
-                            NewsRow(
-                                article: article,
-                                isFavorite: true,
-                                onToggleFavorite: {
-                                    Task { await viewModel.removeFavorite(article) }
-                                }
-                            )
-                        }
-                    }
-                    .listStyle(.plain)
+            content
+                .navigationTitle("お気に入り")
+                .alert("エラー", isPresented: Binding(
+                    get: { viewModel.errorMessage != nil },
+                    set: { if !$0 { viewModel.errorMessage = nil } }
+                )) {
+                    Button("OK") { viewModel.errorMessage = nil }
+                } message: {
+                    Text(viewModel.errorMessage ?? "")
                 }
-            }
-            .navigationTitle("お気に入り")
-            .alert("エラー", isPresented: Binding(
-                get: { viewModel.errorMessage != nil },
-                set: { if !$0 { viewModel.errorMessage = nil } }
-            )) {
-                Button("OK") { viewModel.errorMessage = nil }
-            } message: {
-                Text(viewModel.errorMessage ?? "")
-            }
         }
         .navigationViewStyle(.stack)
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        switch viewModel.uiState {
+        case .loading:
+            ProgressView()
+        case .empty:
+            Text("お気に入りはまだありません")
+                .foregroundColor(.secondary)
+        case .success(let favorites):
+            List(favorites) { article in
+                NavigationLink {
+                    NewsDetailView(
+                        article: article,
+                        isFavorite: true,
+                        favoritesRepository: favoritesRepository
+                    )
+                } label: {
+                    NewsRow(
+                        article: article,
+                        isFavorite: true,
+                        onToggleFavorite: {
+                            Task { await viewModel.removeFavorite(article) }
+                        }
+                    )
+                }
+            }
+            .listStyle(.plain)
+        }
     }
 }

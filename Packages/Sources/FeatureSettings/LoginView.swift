@@ -2,17 +2,17 @@ import SwiftUI
 import CoreModel
 import CoreRepository
 
-public struct LoginView: View {
+struct LoginView: View {
     @StateObject private var viewModel: LoginViewModel
 
-    public init(authRepository: AuthRepository, userDataRepository: UserDataRepository) {
+    init(authRepository: AuthRepository, userDataRepository: UserDataRepository) {
         _viewModel = StateObject(wrappedValue: LoginViewModel(
             authRepository: authRepository,
             userDataRepository: userDataRepository
         ))
     }
 
-    public var body: some View {
+    var body: some View {
         Form {
             Section {
                 TextField("メールアドレス", text: $viewModel.email)

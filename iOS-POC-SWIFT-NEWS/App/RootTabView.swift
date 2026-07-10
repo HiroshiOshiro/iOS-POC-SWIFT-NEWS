@@ -8,26 +8,20 @@ struct RootTabView: View {
 
     var body: some View {
         TabView {
-            NewsListView(
+            NewsNavigation.screen(
                 newsRepository: container.newsRepository,
                 favoritesRepository: container.favoritesRepository
             )
-            .tabItem {
-                Label("News", systemImage: "newspaper")
-            }
+            .tabItem { NewsNavigation.tabItem }
 
-            FavoritesListView(favoritesRepository: container.favoritesRepository)
-                .tabItem {
-                    Label("お気に入り", systemImage: "star")
-                }
+            FavoritesNavigation.screen(favoritesRepository: container.favoritesRepository)
+                .tabItem { FavoritesNavigation.tabItem }
 
-            SettingsRootView(
+            SettingsNavigation.screen(
                 authRepository: container.authRepository,
                 userDataRepository: container.userDataRepository
             )
-                .tabItem {
-                    Label("Setting", systemImage: "gearshape")
-                }
+            .tabItem { SettingsNavigation.tabItem }
         }
     }
 }
