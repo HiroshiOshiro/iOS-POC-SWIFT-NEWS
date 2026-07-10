@@ -29,6 +29,7 @@ targets:
           - FeatureNews
           - FeatureFavorites
           - FeatureSettings
+          - FeatureNavigationDemo
           - CoreRepository
           - CoreNetwork
           - CoreDatabase

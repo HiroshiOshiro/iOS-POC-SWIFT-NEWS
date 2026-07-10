@@ -7,20 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02E5870EC628E4A91B003637 /* CoreDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 701494163115EDB1ACAACE09 /* CoreDatabase */; };
-		4580E28829D4F2DA5EBB4366 /* CoreDesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 70BD74CEC8D44FBC851484A1 /* CoreDesignSystem */; };
-		4AE336547FCC8693AAD64DEB /* CoreNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = D079C5A8640D6E4463B47706 /* CoreNetwork */; };
+		02E5870EC628E4A91B003637 /* CoreNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = D079C5A8640D6E4463B47706 /* CoreNetwork */; };
+		4580E28829D4F2DA5EBB4366 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = 19B08F04949ED736AB7B4FDD /* CoreUI */; };
+		4AE336547FCC8693AAD64DEB /* CoreRepository in Frameworks */ = {isa = PBXBuildFile; productRef = 482ACD8CB3EDD4663BBEABC0 /* CoreRepository */; };
 		5FE7E144F4674B46C2DF69C8 /* iOS_POC_SWIFT_NEWSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FD21E1837A4B229996C9D /* iOS_POC_SWIFT_NEWSApp.swift */; };
 		6490A96F480094F5DF00BAD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 591DD229D8A3692EFEE41917 /* Assets.xcassets */; };
-		8493B4D3AF37736A113A0797 /* CoreRepository in Frameworks */ = {isa = PBXBuildFile; productRef = 482ACD8CB3EDD4663BBEABC0 /* CoreRepository */; };
+		8493B4D3AF37736A113A0797 /* FeatureNavigationDemo in Frameworks */ = {isa = PBXBuildFile; productRef = 391FFCBB344B80166D67AC86 /* FeatureNavigationDemo */; };
 		8FE07F4A11F5078B2346A4F7 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D39CEBBA09DF200F78463F /* AppDIContainer.swift */; };
 		9C1C1510EDA5A2690B01BF79 /* FeatureNews in Frameworks */ = {isa = PBXBuildFile; productRef = 91FF66035DB6C46B99999CD4 /* FeatureNews */; };
 		9D8D5C85FDB87A072A69ADE4 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E093D95493CA3873ADFB0F2 /* RootTabView.swift */; };
-		A0506E51E7466F1832B15081 /* CoreUI in Frameworks */ = {isa = PBXBuildFile; productRef = 19B08F04949ED736AB7B4FDD /* CoreUI */; };
-		C97A03BEAF326EAD60E80F6E /* CoreModel in Frameworks */ = {isa = PBXBuildFile; productRef = 829D76A45419A669CCE88229 /* CoreModel */; };
+		A0506E51E7466F1832B15081 /* CoreModel in Frameworks */ = {isa = PBXBuildFile; productRef = 829D76A45419A669CCE88229 /* CoreModel */; };
+		C97A03BEAF326EAD60E80F6E /* CoreDataStore in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD7C9CC99E2215179528BDA /* CoreDataStore */; };
 		D45D6D4BD81130D76BF4645B /* FeatureFavorites in Frameworks */ = {isa = PBXBuildFile; productRef = B26834A9C8D12AB4B0BF69AA /* FeatureFavorites */; };
 		F018069A2FE5093B3981F9D3 /* FeatureSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 6809C88D7D29C61292590EAB /* FeatureSettings */; };
-		F9C7761C8794670EE4F8570C /* CoreDataStore in Frameworks */ = {isa = PBXBuildFile; productRef = 9FD7C9CC99E2215179528BDA /* CoreDataStore */; };
+		F669AF7FBC9CD5886A40E8E8 /* CoreDesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 70BD74CEC8D44FBC851484A1 /* CoreDesignSystem */; };
+		F9C7761C8794670EE4F8570C /* CoreDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 701494163115EDB1ACAACE09 /* CoreDatabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,13 +41,14 @@
 				9C1C1510EDA5A2690B01BF79 /* FeatureNews in Frameworks */,
 				D45D6D4BD81130D76BF4645B /* FeatureFavorites in Frameworks */,
 				F018069A2FE5093B3981F9D3 /* FeatureSettings in Frameworks */,
-				8493B4D3AF37736A113A0797 /* CoreRepository in Frameworks */,
-				4AE336547FCC8693AAD64DEB /* CoreNetwork in Frameworks */,
-				02E5870EC628E4A91B003637 /* CoreDatabase in Frameworks */,
-				F9C7761C8794670EE4F8570C /* CoreDataStore in Frameworks */,
-				C97A03BEAF326EAD60E80F6E /* CoreModel in Frameworks */,
-				A0506E51E7466F1832B15081 /* CoreUI in Frameworks */,
-				4580E28829D4F2DA5EBB4366 /* CoreDesignSystem in Frameworks */,
+				8493B4D3AF37736A113A0797 /* FeatureNavigationDemo in Frameworks */,
+				4AE336547FCC8693AAD64DEB /* CoreRepository in Frameworks */,
+				02E5870EC628E4A91B003637 /* CoreNetwork in Frameworks */,
+				F9C7761C8794670EE4F8570C /* CoreDatabase in Frameworks */,
+				C97A03BEAF326EAD60E80F6E /* CoreDataStore in Frameworks */,
+				A0506E51E7466F1832B15081 /* CoreModel in Frameworks */,
+				4580E28829D4F2DA5EBB4366 /* CoreUI in Frameworks */,
+				F669AF7FBC9CD5886A40E8E8 /* CoreDesignSystem in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +127,7 @@
 				91FF66035DB6C46B99999CD4 /* FeatureNews */,
 				B26834A9C8D12AB4B0BF69AA /* FeatureFavorites */,
 				6809C88D7D29C61292590EAB /* FeatureSettings */,
+				391FFCBB344B80166D67AC86 /* FeatureNavigationDemo */,
 				482ACD8CB3EDD4663BBEABC0 /* CoreRepository */,
 				D079C5A8640D6E4463B47706 /* CoreNetwork */,
 				701494163115EDB1ACAACE09 /* CoreDatabase */,
@@ -390,6 +393,10 @@
 		19B08F04949ED736AB7B4FDD /* CoreUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CoreUI;
+		};
+		391FFCBB344B80166D67AC86 /* FeatureNavigationDemo */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FeatureNavigationDemo;
 		};
 		482ACD8CB3EDD4663BBEABC0 /* CoreRepository */ = {
 			isa = XCSwiftPackageProductDependency;

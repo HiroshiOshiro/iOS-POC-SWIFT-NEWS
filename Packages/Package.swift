@@ -26,6 +26,7 @@ let package = Package(
         .library(name: "FeatureNews", targets: ["FeatureNews"]),
         .library(name: "FeatureFavorites", targets: ["FeatureFavorites"]),
         .library(name: "FeatureSettings", targets: ["FeatureSettings"]),
+        .library(name: "FeatureNavigationDemo", targets: ["FeatureNavigationDemo"]),
     ],
     targets: [
         .target(name: "CoreModel"),
@@ -60,6 +61,7 @@ let package = Package(
             name: "FeatureSettings",
             dependencies: ["CoreModel", "CoreRepository"]
         ),
+        .target(name: "FeatureNavigationDemo"),
         .testTarget(
             name: "CoreRepositoryTests",
             dependencies: ["CoreRepository", "CoreNetwork", "CoreDatabase", "CoreTesting"]

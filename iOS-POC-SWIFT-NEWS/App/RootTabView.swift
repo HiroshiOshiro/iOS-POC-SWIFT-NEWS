@@ -2,6 +2,7 @@ import SwiftUI
 import FeatureNews
 import FeatureFavorites
 import FeatureSettings
+import FeatureNavigationDemo
 
 struct RootTabView: View {
     let container: AppDIContainer
@@ -22,6 +23,9 @@ struct RootTabView: View {
                 userDataRepository: container.userDataRepository
             )
             .tabItem { SettingsNavigation.tabItem }
+
+            NavigationDemoNavigation.screen()
+                .tabItem { NavigationDemoNavigation.tabItem }
         }
     }
 }
