@@ -28,8 +28,8 @@
 		3E093D95493CA3873ADFB0F2 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		400FD21E1837A4B229996C9D /* iOS_POC_SWIFT_NEWSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_POC_SWIFT_NEWSApp.swift; sourceTree = "<group>"; };
 		591DD229D8A3692EFEE41917 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5E1640666F41BECBF7812038 /* iOS-POC-SWIFT-NEWS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "iOS-POC-SWIFT-NEWS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7E638C03EEB5E7F57997DA37 /* Packages */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Packages; path = Packages; sourceTree = SOURCE_ROOT; };
+		5E1640666F41BECBF7812038 /* iOS-POC-SWIFT-NEWS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-POC-SWIFT-NEWS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E638C03EEB5E7F57997DA37 /* Packages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Packages; sourceTree = SOURCE_ROOT; };
 		92D39CEBBA09DF200F78463F /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -280,6 +280,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hiroshioshiro.iOSPOCSWIFTNEWS;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -297,6 +298,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hiroshioshiro.iOSPOCSWIFTNEWS;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

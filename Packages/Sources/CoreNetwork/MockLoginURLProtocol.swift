@@ -1,6 +1,8 @@
 import Foundation
 
-final class MockLoginURLProtocol: URLProtocol {
+// URLProtocol の読み込みは URLSession が管理する専用コンテキストで直列に呼ばれるため、
+// モック用途に限り Sendable として扱う（実インスタンスが並行に共有されることはない）。
+final class MockLoginURLProtocol: URLProtocol, @unchecked Sendable {
     override class func canInit(with request: URLRequest) -> Bool {
         request.url?.host == "mock-api.iospocnews.local"
     }

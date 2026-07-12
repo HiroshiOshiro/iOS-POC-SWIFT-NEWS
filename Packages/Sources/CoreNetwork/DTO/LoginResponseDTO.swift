@@ -1,6 +1,6 @@
 import Foundation
 
-public struct LoginResponseDTO: Decodable {
+public struct LoginResponseDTO: Decodable, Sendable {
     public let id: String
     public let name: String
     public let email: String

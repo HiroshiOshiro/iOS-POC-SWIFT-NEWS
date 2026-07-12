@@ -1,7 +1,8 @@
 import Foundation
 import CoreNetwork
 
-public final class FakeHackerNewsNetworkDataSource: HackerNewsNetworkDataSource {
+// テストダブル。テストが構成してから単一タスクで使う前提のため @unchecked Sendable とする。
+public final class FakeHackerNewsNetworkDataSource: HackerNewsNetworkDataSource, @unchecked Sendable {
     public var topStoryIDs: [Int] = [1, 2, 3]
     public var items: [Int: NewsItemDTO] = [:]
     public var error: Error?

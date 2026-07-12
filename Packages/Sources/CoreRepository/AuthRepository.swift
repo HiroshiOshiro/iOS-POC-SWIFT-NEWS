@@ -12,6 +12,6 @@ public enum AuthError: Error, LocalizedError, Equatable {
     }
 }
 
-public protocol AuthRepository {
+public protocol AuthRepository: Sendable {
     func login(email: String, password: String) async throws -> User
 }

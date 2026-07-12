@@ -14,7 +14,7 @@ private enum HackerNewsEndpoint: Endpoint {
     }
 }
 
-public final class DefaultHackerNewsNetworkDataSource: HackerNewsNetworkDataSource {
+public final class DefaultHackerNewsNetworkDataSource: HackerNewsNetworkDataSource, Sendable {
     private let networkService: NetworkService
 
     public init(networkService: NetworkService) {

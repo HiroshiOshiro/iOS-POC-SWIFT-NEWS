@@ -1,7 +1,8 @@
 import Foundation
 import CoreNetwork
 
-public final class FakeAuthNetworkDataSource: AuthNetworkDataSource {
+// テストダブル。テストが構成してから単一タスクで使う前提のため @unchecked Sendable とする。
+public final class FakeAuthNetworkDataSource: AuthNetworkDataSource, @unchecked Sendable {
     public var result: Result<LoginResponseDTO, Error> = .failure(NetworkError.httpStatus(401))
 
     public init() {}

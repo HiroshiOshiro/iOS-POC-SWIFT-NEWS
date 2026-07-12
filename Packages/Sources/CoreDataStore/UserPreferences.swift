@@ -1,7 +1,7 @@
 import Foundation
 
 // UserDefaultsに保存する生データ。core:datastoreはドメインモデルを知らない。
-public struct UserPreferences: Equatable {
+public struct UserPreferences: Equatable, Sendable {
     public let isLoggedIn: Bool
     public let userID: String
     public let userName: String

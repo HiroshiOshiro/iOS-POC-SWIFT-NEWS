@@ -2,7 +2,8 @@ import Foundation
 import CoreModel
 import CoreRepository
 
-public final class FakeNewsRepository: NewsRepository {
+// テストダブル。テストが構成してから単一タスクで使う前提のため @unchecked Sendable とする。
+public final class FakeNewsRepository: NewsRepository, @unchecked Sendable {
     public var articles: [NewsArticle] = []
     public var error: Error?
 

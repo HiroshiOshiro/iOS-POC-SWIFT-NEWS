@@ -1,6 +1,6 @@
 import Foundation
 
-public struct NewsItemDTO: Decodable {
+public struct NewsItemDTO: Decodable, Sendable {
     public let id: Int
     public let title: String?
     public let url: String?

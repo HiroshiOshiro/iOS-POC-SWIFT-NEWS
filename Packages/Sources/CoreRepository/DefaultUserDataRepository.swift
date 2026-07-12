@@ -2,7 +2,7 @@ import Foundation
 import CoreModel
 import CoreDataStore
 
-public final class DefaultUserDataRepository: UserDataRepository {
+public final class DefaultUserDataRepository: UserDataRepository, Sendable {
     private let dataSource: UserPreferencesDataSource
 
     public init(dataSource: UserPreferencesDataSource) {

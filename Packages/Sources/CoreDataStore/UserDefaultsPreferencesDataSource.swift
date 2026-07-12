@@ -1,7 +1,6 @@
 import Foundation
-import Combine
 
-public final class UserDefaultsPreferencesDataSource: UserPreferencesDataSource {
+public final class UserDefaultsPreferencesDataSource: UserPreferencesDataSource, @unchecked Sendable {
     private enum Key {
         static let isLoggedIn = "isLoggedIn"
         static let userID = "loggedInUserID"
@@ -10,17 +9,33 @@ public final class UserDefaultsPreferencesDataSource: UserPreferencesDataSource 
     }
 
     private let defaults: UserDefaults
-    private let subject: CurrentValueSubject<UserPreferences, Never>
+    // 配信状態はロックで保護する。Combine は使わず AsyncStream で複数の監視者へ多重配信する。
+    private let lock = NSLock()
+    private var current: UserPreferences
+    private var continuations: [UUID: AsyncStream<UserPreferences>.Continuation] = [:]
 
     public init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
-        subject = CurrentValueSubject(Self.read(from: defaults))
+        current = Self.read(from: defaults)
     }
 
     public func observe() -> AsyncStream<UserPreferences> {
         AsyncStream { continuation in
-            let cancellable = subject.sink { continuation.yield($0) }
-            continuation.onTermination = { _ in cancellable.cancel() }
+            let id = UUID()
+            lock.lock()
+            continuations[id] = continuation
+            let value = current
+            lock.unlock()
+
+            // 購読直後に現在値を配信する（旧 CurrentValueSubject と同じ挙動）。
+            continuation.yield(value)
+
+            continuation.onTermination = { [weak self] _ in
+                guard let self else { return }
+                lock.lock()
+                continuations[id] = nil
+                lock.unlock()
+            }
         }
     }
 
@@ -29,7 +44,15 @@ public final class UserDefaultsPreferencesDataSource: UserPreferencesDataSource 
         defaults.set(preferences.userID, forKey: Key.userID)
         defaults.set(preferences.userName, forKey: Key.userName)
         defaults.set(preferences.userEmail, forKey: Key.userEmail)
-        subject.send(preferences)
+
+        lock.lock()
+        current = preferences
+        let targets = Array(continuations.values)
+        lock.unlock()
+
+        for continuation in targets {
+            continuation.yield(preferences)
+        }
     }
 
     public func clear() {

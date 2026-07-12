@@ -1,27 +1,52 @@
 import Foundation
-import Combine
 import CoreModel
 import CoreRepository
 
-public final class FakeUserDataRepository: UserDataRepository {
-    private let subject: CurrentValueSubject<User?, Never>
+// Combine は使わず、ロックで保護した継続への多重配信で実装するインメモリFake。
+public final class FakeUserDataRepository: UserDataRepository, @unchecked Sendable {
+    private let lock = NSLock()
+    private var current: User?
+    private var continuations: [UUID: AsyncStream<User?>.Continuation] = [:]
 
     public init(initialUser: User? = nil) {
-        subject = CurrentValueSubject(initialUser)
+        current = initialUser
     }
 
     public func observeCurrentUser() -> AsyncStream<User?> {
         AsyncStream { continuation in
-            let cancellable = subject.sink { continuation.yield($0) }
-            continuation.onTermination = { _ in cancellable.cancel() }
+            let id = UUID()
+            lock.lock()
+            continuations[id] = continuation
+            let value = current
+            lock.unlock()
+
+            continuation.yield(value)
+
+            continuation.onTermination = { [weak self] _ in
+                guard let self else { return }
+                lock.lock()
+                continuations[id] = nil
+                lock.unlock()
+            }
         }
     }
 
     public func saveCurrentUser(_ user: User) {
-        subject.send(user)
+        publish(user)
     }
 
     public func clearCurrentUser() {
-        subject.send(nil)
+        publish(nil)
+    }
+
+    private func publish(_ user: User?) {
+        lock.lock()
+        current = user
+        let targets = Array(continuations.values)
+        lock.unlock()
+
+        for continuation in targets {
+            continuation.yield(user)
+        }
     }
 }

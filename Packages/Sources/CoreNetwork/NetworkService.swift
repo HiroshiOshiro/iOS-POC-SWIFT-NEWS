@@ -26,7 +26,7 @@ public enum NetworkError: Error, LocalizedError {
     }
 }
 
-public final class NetworkService {
+public final class NetworkService: Sendable {
     private let session: URLSession
     private let logger = Logger(subsystem: "com.hiroshioshiro.iOSPOCSWIFTNEWS", category: "Network")
 
@@ -63,11 +63,12 @@ public final class NetworkService {
         }
     }
 
-    public static let defaultDecoder: JSONDecoder = {
+    // JSONDecoder は Sendable でないため static let で保持できない。呼び出しごとに生成する。
+    public static var defaultDecoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         return decoder
-    }()
+    }
 
     private func logRequest(_ request: URLRequest) {
         let method = request.httpMethod ?? "GET"
