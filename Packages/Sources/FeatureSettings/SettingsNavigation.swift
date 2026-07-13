@@ -1,10 +1,9 @@
 import SwiftUI
-import CoreRepository
 
 public enum SettingsNavigation {
     @ViewBuilder
-    public static func screen(authRepository: AuthRepository, userDataRepository: UserDataRepository) -> some View {
-        SettingsRootView(authRepository: authRepository, userDataRepository: userDataRepository)
+    public static func screen() -> some View {
+        SettingsRootView()
     }
 
     public static var tabItem: some View {

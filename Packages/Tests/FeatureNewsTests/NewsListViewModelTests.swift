@@ -1,4 +1,5 @@
 import XCTest
+import Factory
 import CoreModel
 import CoreTesting
 @testable import FeatureNews
@@ -12,11 +13,18 @@ final class NewsListViewModelTests: XCTestCase {
         NewsArticle(id: id, title: "Title \(id)", url: nil, author: "author", score: 1, time: fixedDate, commentCount: 0)
     }
 
+    override func tearDown() {
+        Container.shared.reset()
+        super.tearDown()
+    }
+
     func testLoadPopulatesArticles() async throws {
         let newsRepository = FakeNewsRepository()
         newsRepository.articles = [makeArticle(id: 1), makeArticle(id: 2)]
-        let viewModel = NewsListViewModel(newsRepository: newsRepository, favoritesRepository: FakeFavoritesRepository())
+        Container.shared.newsRepository.register { newsRepository }
+        Container.shared.favoritesRepository.register { FakeFavoritesRepository() }
 
+        let viewModel = NewsListViewModel()
         await viewModel.load()
 
         XCTAssertEqual(viewModel.uiState, .success([makeArticle(id: 1), makeArticle(id: 2)]))
@@ -27,7 +35,10 @@ final class NewsListViewModelTests: XCTestCase {
         let article = makeArticle(id: 1)
         newsRepository.articles = [article]
         let favoritesRepository = FakeFavoritesRepository()
-        let viewModel = NewsListViewModel(newsRepository: newsRepository, favoritesRepository: favoritesRepository)
+        Container.shared.newsRepository.register { newsRepository }
+        Container.shared.favoritesRepository.register { favoritesRepository }
+
+        let viewModel = NewsListViewModel()
         await viewModel.load()
 
         await viewModel.toggleFavorite(article)
@@ -39,8 +50,10 @@ final class NewsListViewModelTests: XCTestCase {
     func testLoadFailureSetsFailureUiState() async throws {
         let newsRepository = FakeNewsRepository()
         newsRepository.error = URLError(.notConnectedToInternet)
-        let viewModel = NewsListViewModel(newsRepository: newsRepository, favoritesRepository: FakeFavoritesRepository())
+        Container.shared.newsRepository.register { newsRepository }
+        Container.shared.favoritesRepository.register { FakeFavoritesRepository() }
 
+        let viewModel = NewsListViewModel()
         await viewModel.load()
 
         guard case .failure = viewModel.uiState else {

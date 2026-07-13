@@ -1,4 +1,5 @@
 import XCTest
+import Factory
 import CoreModel
 import CoreTesting
 @testable import FeatureFavorites
@@ -12,10 +13,16 @@ final class FavoritesListViewModelTests: XCTestCase {
         NewsArticle(id: id, title: "Title \(id)", url: nil, author: "author", score: 1, time: fixedDate, commentCount: 0)
     }
 
+    override func tearDown() {
+        Container.shared.reset()
+        super.tearDown()
+    }
+
     func testInitialFavoritesAreObservedOnInit() async throws {
         let favoritesRepository = FakeFavoritesRepository(initialFavorites: [makeArticle(id: 1), makeArticle(id: 2)])
-        let viewModel = FavoritesListViewModel(favoritesRepository: favoritesRepository)
+        Container.shared.favoritesRepository.register { favoritesRepository }
 
+        let viewModel = FavoritesListViewModel()
         try await Task.sleep(nanoseconds: 50_000_000)
 
         XCTAssertEqual(viewModel.uiState, .success([makeArticle(id: 1), makeArticle(id: 2)]))
@@ -23,8 +30,9 @@ final class FavoritesListViewModelTests: XCTestCase {
 
     func testEmptyFavoritesProducesEmptyUiState() async throws {
         let favoritesRepository = FakeFavoritesRepository(initialFavorites: [])
-        let viewModel = FavoritesListViewModel(favoritesRepository: favoritesRepository)
+        Container.shared.favoritesRepository.register { favoritesRepository }
 
+        let viewModel = FavoritesListViewModel()
         try await Task.sleep(nanoseconds: 50_000_000)
 
         XCTAssertEqual(viewModel.uiState, .empty)
@@ -32,7 +40,9 @@ final class FavoritesListViewModelTests: XCTestCase {
 
     func testRemoveFavoriteUpdatesListReactively() async throws {
         let favoritesRepository = FakeFavoritesRepository(initialFavorites: [makeArticle(id: 1), makeArticle(id: 2)])
-        let viewModel = FavoritesListViewModel(favoritesRepository: favoritesRepository)
+        Container.shared.favoritesRepository.register { favoritesRepository }
+
+        let viewModel = FavoritesListViewModel()
         try await Task.sleep(nanoseconds: 50_000_000)
 
         await viewModel.removeFavorite(makeArticle(id: 1))

@@ -1,17 +1,10 @@
 import SwiftUI
 import CoreModel
-import CoreRepository
 import CoreUI
 
-// FavoritesNavigation.screen(...) 経由でのみ生成する
+// FavoritesNavigation.screen() 経由でのみ生成する
 struct FavoritesListView: View {
-    private let favoritesRepository: FavoritesRepository
-    @StateObject private var viewModel: FavoritesListViewModel
-
-    init(favoritesRepository: FavoritesRepository) {
-        self.favoritesRepository = favoritesRepository
-        _viewModel = StateObject(wrappedValue: FavoritesListViewModel(favoritesRepository: favoritesRepository))
-    }
+    @StateObject private var viewModel = FavoritesListViewModel()
 
     var body: some View {
         NavigationView {
@@ -40,11 +33,7 @@ struct FavoritesListView: View {
         case .success(let favorites):
             List(favorites) { article in
                 NavigationLink {
-                    NewsDetailView(
-                        article: article,
-                        isFavorite: true,
-                        favoritesRepository: favoritesRepository
-                    )
+                    NewsDetailView(article: article, isFavorite: true)
                 } label: {
                     NewsRow(
                         article: article,

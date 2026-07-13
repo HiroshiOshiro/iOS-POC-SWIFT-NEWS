@@ -1,4 +1,5 @@
 import Foundation
+import Factory
 import CoreModel
 import CoreRepository
 
@@ -9,13 +10,10 @@ public final class LoginViewModel: ObservableObject {
     @Published public private(set) var isLoading = false
     @Published public var errorMessage: String?
 
-    private let authRepository: AuthRepository
-    private let userDataRepository: UserDataRepository
+    @Injected(\.authRepository) private var authRepository: AuthRepository
+    @Injected(\.userDataRepository) private var userDataRepository: UserDataRepository
 
-    public init(authRepository: AuthRepository, userDataRepository: UserDataRepository) {
-        self.authRepository = authRepository
-        self.userDataRepository = userDataRepository
-    }
+    public init() {}
 
     public func login() async {
         isLoading = true

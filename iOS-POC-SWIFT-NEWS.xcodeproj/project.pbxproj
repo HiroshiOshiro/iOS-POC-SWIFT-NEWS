@@ -13,7 +13,6 @@
 		5FE7E144F4674B46C2DF69C8 /* iOS_POC_SWIFT_NEWSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FD21E1837A4B229996C9D /* iOS_POC_SWIFT_NEWSApp.swift */; };
 		6490A96F480094F5DF00BAD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 591DD229D8A3692EFEE41917 /* Assets.xcassets */; };
 		8493B4D3AF37736A113A0797 /* FeatureNavigationDemo in Frameworks */ = {isa = PBXBuildFile; productRef = 391FFCBB344B80166D67AC86 /* FeatureNavigationDemo */; };
-		8FE07F4A11F5078B2346A4F7 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D39CEBBA09DF200F78463F /* AppDIContainer.swift */; };
 		9C1C1510EDA5A2690B01BF79 /* FeatureNews in Frameworks */ = {isa = PBXBuildFile; productRef = 91FF66035DB6C46B99999CD4 /* FeatureNews */; };
 		9D8D5C85FDB87A072A69ADE4 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E093D95493CA3873ADFB0F2 /* RootTabView.swift */; };
 		A0506E51E7466F1832B15081 /* CoreModel in Frameworks */ = {isa = PBXBuildFile; productRef = 829D76A45419A669CCE88229 /* CoreModel */; };
@@ -30,7 +29,6 @@
 		591DD229D8A3692EFEE41917 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5E1640666F41BECBF7812038 /* iOS-POC-SWIFT-NEWS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "iOS-POC-SWIFT-NEWS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E638C03EEB5E7F57997DA37 /* Packages */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Packages; path = Packages; sourceTree = SOURCE_ROOT; };
-		92D39CEBBA09DF200F78463F /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +90,6 @@
 		C10A4F93E917E575976C51D6 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				92D39CEBBA09DF200F78463F /* AppDIContainer.swift */,
 				400FD21E1837A4B229996C9D /* iOS_POC_SWIFT_NEWSApp.swift */,
 				3E093D95493CA3873ADFB0F2 /* RootTabView.swift */,
 			);
@@ -193,7 +190,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FE07F4A11F5078B2346A4F7 /* AppDIContainer.swift in Sources */,
 				9D8D5C85FDB87A072A69ADE4 /* RootTabView.swift in Sources */,
 				5FE7E144F4674B46C2DF69C8 /* iOS_POC_SWIFT_NEWSApp.swift in Sources */,
 			);

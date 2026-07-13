@@ -1,4 +1,5 @@
 import Foundation
+import Factory
 import CoreModel
 import CoreRepository
 
@@ -8,12 +9,11 @@ public final class NewsDetailViewModel: ObservableObject {
     @Published public private(set) var isFavorite: Bool
     @Published public var errorMessage: String?
 
-    private let favoritesRepository: FavoritesRepository
+    @Injected(\.favoritesRepository) private var favoritesRepository: FavoritesRepository
 
-    public init(article: NewsArticle, isFavorite: Bool, favoritesRepository: FavoritesRepository) {
+    public init(article: NewsArticle, isFavorite: Bool) {
         self.article = article
         self.isFavorite = isFavorite
-        self.favoritesRepository = favoritesRepository
     }
 
     public func toggleFavorite() async {

@@ -1,10 +1,9 @@
 import SwiftUI
-import CoreRepository
 
 public enum FavoritesNavigation {
     @ViewBuilder
-    public static func screen(favoritesRepository: FavoritesRepository) -> some View {
-        FavoritesListView(favoritesRepository: favoritesRepository)
+    public static func screen() -> some View {
+        FavoritesListView()
     }
 
     public static var tabItem: some View {

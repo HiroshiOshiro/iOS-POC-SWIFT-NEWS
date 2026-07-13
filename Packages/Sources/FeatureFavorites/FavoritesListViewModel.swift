@@ -1,4 +1,5 @@
 import Foundation
+import Factory
 import CoreModel
 import CoreRepository
 
@@ -7,11 +8,10 @@ public final class FavoritesListViewModel: ObservableObject {
     @Published public private(set) var uiState: FavoritesUiState = .loading
     @Published public var errorMessage: String?
 
-    private let favoritesRepository: FavoritesRepository
+    @Injected(\.favoritesRepository) private var favoritesRepository: FavoritesRepository
     private var observeTask: Task<Void, Never>?
 
-    public init(favoritesRepository: FavoritesRepository) {
-        self.favoritesRepository = favoritesRepository
+    public init() {
         observeTask = Task { [weak self] in
             guard let self else { return }
             for await favorites in favoritesRepository.observeFavorites() {

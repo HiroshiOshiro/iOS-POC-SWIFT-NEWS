@@ -1,17 +1,8 @@
 import SwiftUI
-import CoreRepository
 
-// SettingsNavigation.screen(...) 経由でのみ生成する
+// SettingsNavigation.screen() 経由でのみ生成する
 struct SettingsRootView: View {
-    private let authRepository: AuthRepository
-    private let userDataRepository: UserDataRepository
-    @StateObject private var viewModel: SettingsRootViewModel
-
-    init(authRepository: AuthRepository, userDataRepository: UserDataRepository) {
-        self.authRepository = authRepository
-        self.userDataRepository = userDataRepository
-        _viewModel = StateObject(wrappedValue: SettingsRootViewModel(userDataRepository: userDataRepository))
-    }
+    @StateObject private var viewModel = SettingsRootViewModel()
 
     var body: some View {
         NavigationView {
@@ -20,7 +11,7 @@ struct SettingsRootView: View {
                     viewModel.logout()
                 }
             } else {
-                LoginView(authRepository: authRepository, userDataRepository: userDataRepository)
+                LoginView()
             }
         }
         .navigationViewStyle(.stack)
