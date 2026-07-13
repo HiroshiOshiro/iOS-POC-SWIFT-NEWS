@@ -11,6 +11,9 @@ import PackageDescription
 //   CoreUI           = core:ui            (複数Featureで共有する複合UI)
 //   CoreTesting      = core:testing       (Fake実装。テストターゲットのみが利用)
 //   Feature*         = feature:*
+//
+// このブランチ(poc/swift-dependencies)では、pointfreeco/swift-dependenciesを使い
+// Repositoryの解決をコンストラクタ注入からプロパティラッパー注入(@Dependency)に変更している。
 let package = Package(
     name: "AppPackages",
     platforms: [.iOS(.v15)],
@@ -28,6 +31,9 @@ let package = Package(
         .library(name: "FeatureSettings", targets: ["FeatureSettings"]),
         .library(name: "FeatureNavigationDemo", targets: ["FeatureNavigationDemo"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.3.0"),
+    ],
     targets: [
         .target(name: "CoreModel"),
         .target(name: "CoreNetwork"),
@@ -38,12 +44,18 @@ let package = Package(
         .target(name: "CoreDataStore"),
         .target(
             name: "CoreRepository",
-            dependencies: ["CoreModel", "CoreNetwork", "CoreDatabase", "CoreDataStore"]
+            dependencies: [
+                "CoreModel", "CoreNetwork", "CoreDatabase", "CoreDataStore",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
         .target(name: "CoreDesignSystem"),
         .target(
             name: "CoreUI",
-            dependencies: ["CoreModel", "CoreRepository", "CoreDesignSystem"]
+            dependencies: [
+                "CoreModel", "CoreRepository", "CoreDesignSystem",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
         .target(
             name: "CoreTesting",
@@ -51,15 +63,24 @@ let package = Package(
         ),
         .target(
             name: "FeatureNews",
-            dependencies: ["CoreModel", "CoreRepository", "CoreUI"]
+            dependencies: [
+                "CoreModel", "CoreRepository", "CoreUI",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
         .target(
             name: "FeatureFavorites",
-            dependencies: ["CoreModel", "CoreRepository", "CoreUI"]
+            dependencies: [
+                "CoreModel", "CoreRepository", "CoreUI",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
         .target(
             name: "FeatureSettings",
-            dependencies: ["CoreModel", "CoreRepository"]
+            dependencies: [
+                "CoreModel", "CoreRepository",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
         .target(name: "FeatureNavigationDemo"),
         .testTarget(
@@ -68,15 +89,24 @@ let package = Package(
         ),
         .testTarget(
             name: "FeatureNewsTests",
-            dependencies: ["FeatureNews", "CoreTesting"]
+            dependencies: [
+                "FeatureNews", "CoreTesting",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
         .testTarget(
             name: "FeatureFavoritesTests",
-            dependencies: ["FeatureFavorites", "CoreTesting"]
+            dependencies: [
+                "FeatureFavorites", "CoreTesting",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
         .testTarget(
             name: "FeatureSettingsTests",
-            dependencies: ["FeatureSettings", "CoreRepository", "CoreTesting"]
+            dependencies: [
+                "FeatureSettings", "CoreRepository", "CoreTesting",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
     ]
 )

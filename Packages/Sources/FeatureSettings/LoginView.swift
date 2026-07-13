@@ -1,16 +1,7 @@
 import SwiftUI
-import CoreModel
-import CoreRepository
 
 struct LoginView: View {
-    @StateObject private var viewModel: LoginViewModel
-
-    init(authRepository: AuthRepository, userDataRepository: UserDataRepository) {
-        _viewModel = StateObject(wrappedValue: LoginViewModel(
-            authRepository: authRepository,
-            userDataRepository: userDataRepository
-        ))
-    }
+    @StateObject private var viewModel = LoginViewModel()
 
     var body: some View {
         Form {

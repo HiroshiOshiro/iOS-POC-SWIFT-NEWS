@@ -1,4 +1,5 @@
 import Foundation
+import Dependencies
 import CoreModel
 import CoreRepository
 
@@ -6,11 +7,10 @@ import CoreRepository
 public final class SettingsRootViewModel: ObservableObject {
     @Published public private(set) var currentUser: User?
 
-    private let userDataRepository: UserDataRepository
+    @Dependency(\.userDataRepository) private var userDataRepository
     private var observeTask: Task<Void, Never>?
 
-    public init(userDataRepository: UserDataRepository) {
-        self.userDataRepository = userDataRepository
+    public init() {
         observeTask = Task { [weak self] in
             guard let self else { return }
             for await user in userDataRepository.observeCurrentUser() {

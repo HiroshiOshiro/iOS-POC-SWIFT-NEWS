@@ -1,21 +1,11 @@
 import SwiftUI
 import CoreModel
-import CoreRepository
 import CoreUI
 
-// NewsNavigation.screen(...) 経由でのみ生成する(NiAのForYouScreenが
+// NewsNavigation.screen() 経由でのみ生成する(NiAのForYouScreenが
 // NavGraphBuilder越しにしか呼ばれないのと同様、モジュール外には公開しない)
 struct NewsListView: View {
-    private let favoritesRepository: FavoritesRepository
-    @StateObject private var viewModel: NewsListViewModel
-
-    init(newsRepository: NewsRepository, favoritesRepository: FavoritesRepository) {
-        self.favoritesRepository = favoritesRepository
-        _viewModel = StateObject(wrappedValue: NewsListViewModel(
-            newsRepository: newsRepository,
-            favoritesRepository: favoritesRepository
-        ))
-    }
+    @StateObject private var viewModel = NewsListViewModel()
 
     var body: some View {
         NavigationView {
@@ -44,11 +34,7 @@ struct NewsListView: View {
         case .success(let articles):
             List(articles) { article in
                 NavigationLink {
-                    NewsDetailView(
-                        article: article,
-                        isFavorite: viewModel.isFavorite(article),
-                        favoritesRepository: favoritesRepository
-                    )
+                    NewsDetailView(article: article, isFavorite: viewModel.isFavorite(article))
                 } label: {
                     NewsRow(
                         article: article,

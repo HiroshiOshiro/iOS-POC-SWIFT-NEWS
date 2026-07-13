@@ -1,4 +1,5 @@
 import Foundation
+import Dependencies
 import CoreModel
 import CoreRepository
 
@@ -11,13 +12,12 @@ public final class NewsListViewModel: ObservableObject {
     // お気に入りトグル失敗など一過性のイベント用。uiStateとは別チャンネルで扱う(NiAのSnackbarメッセージ相当)
     @Published public var errorMessage: String?
 
-    private let newsRepository: NewsRepository
-    private let favoritesRepository: FavoritesRepository
+    @Dependency(\.newsRepository) private var newsRepository
+    @Dependency(\.favoritesRepository) private var favoritesRepository
+
     private var observeFavoriteIDsTask: Task<Void, Never>?
 
-    public init(newsRepository: NewsRepository, favoritesRepository: FavoritesRepository) {
-        self.newsRepository = newsRepository
-        self.favoritesRepository = favoritesRepository
+    public init() {
         observeFavoriteIDsTask = Task { [weak self] in
             guard let self else { return }
             for await ids in favoritesRepository.observeFavoriteIDs() {

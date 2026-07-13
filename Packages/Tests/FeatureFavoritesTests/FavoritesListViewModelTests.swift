@@ -1,4 +1,5 @@
 import XCTest
+import Dependencies
 import CoreModel
 import CoreTesting
 @testable import FeatureFavorites
@@ -14,7 +15,11 @@ final class FavoritesListViewModelTests: XCTestCase {
 
     func testInitialFavoritesAreObservedOnInit() async throws {
         let favoritesRepository = FakeFavoritesRepository(initialFavorites: [makeArticle(id: 1), makeArticle(id: 2)])
-        let viewModel = FavoritesListViewModel(favoritesRepository: favoritesRepository)
+        let viewModel = withDependencies {
+            $0.favoritesRepository = favoritesRepository
+        } operation: {
+            FavoritesListViewModel()
+        }
 
         try await Task.sleep(nanoseconds: 50_000_000)
 
@@ -23,7 +28,11 @@ final class FavoritesListViewModelTests: XCTestCase {
 
     func testEmptyFavoritesProducesEmptyUiState() async throws {
         let favoritesRepository = FakeFavoritesRepository(initialFavorites: [])
-        let viewModel = FavoritesListViewModel(favoritesRepository: favoritesRepository)
+        let viewModel = withDependencies {
+            $0.favoritesRepository = favoritesRepository
+        } operation: {
+            FavoritesListViewModel()
+        }
 
         try await Task.sleep(nanoseconds: 50_000_000)
 
@@ -32,7 +41,11 @@ final class FavoritesListViewModelTests: XCTestCase {
 
     func testRemoveFavoriteUpdatesListReactively() async throws {
         let favoritesRepository = FakeFavoritesRepository(initialFavorites: [makeArticle(id: 1), makeArticle(id: 2)])
-        let viewModel = FavoritesListViewModel(favoritesRepository: favoritesRepository)
+        let viewModel = withDependencies {
+            $0.favoritesRepository = favoritesRepository
+        } operation: {
+            FavoritesListViewModel()
+        }
         try await Task.sleep(nanoseconds: 50_000_000)
 
         await viewModel.removeFavorite(makeArticle(id: 1))

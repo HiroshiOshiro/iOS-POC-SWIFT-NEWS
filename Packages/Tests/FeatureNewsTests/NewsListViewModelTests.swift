@@ -1,4 +1,5 @@
 import XCTest
+import Dependencies
 import CoreModel
 import CoreTesting
 @testable import FeatureNews
@@ -15,7 +16,12 @@ final class NewsListViewModelTests: XCTestCase {
     func testLoadPopulatesArticles() async throws {
         let newsRepository = FakeNewsRepository()
         newsRepository.articles = [makeArticle(id: 1), makeArticle(id: 2)]
-        let viewModel = NewsListViewModel(newsRepository: newsRepository, favoritesRepository: FakeFavoritesRepository())
+        let viewModel = withDependencies {
+            $0.newsRepository = newsRepository
+            $0.favoritesRepository = FakeFavoritesRepository()
+        } operation: {
+            NewsListViewModel()
+        }
 
         await viewModel.load()
 
@@ -27,7 +33,12 @@ final class NewsListViewModelTests: XCTestCase {
         let article = makeArticle(id: 1)
         newsRepository.articles = [article]
         let favoritesRepository = FakeFavoritesRepository()
-        let viewModel = NewsListViewModel(newsRepository: newsRepository, favoritesRepository: favoritesRepository)
+        let viewModel = withDependencies {
+            $0.newsRepository = newsRepository
+            $0.favoritesRepository = favoritesRepository
+        } operation: {
+            NewsListViewModel()
+        }
         await viewModel.load()
 
         await viewModel.toggleFavorite(article)
@@ -39,7 +50,12 @@ final class NewsListViewModelTests: XCTestCase {
     func testLoadFailureSetsFailureUiState() async throws {
         let newsRepository = FakeNewsRepository()
         newsRepository.error = URLError(.notConnectedToInternet)
-        let viewModel = NewsListViewModel(newsRepository: newsRepository, favoritesRepository: FakeFavoritesRepository())
+        let viewModel = withDependencies {
+            $0.newsRepository = newsRepository
+            $0.favoritesRepository = FakeFavoritesRepository()
+        } operation: {
+            NewsListViewModel()
+        }
 
         await viewModel.load()
 

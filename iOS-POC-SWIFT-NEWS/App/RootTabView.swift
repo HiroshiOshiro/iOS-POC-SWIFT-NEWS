@@ -5,24 +5,16 @@ import FeatureSettings
 import FeatureNavigationDemo
 
 struct RootTabView: View {
-    let container: AppDIContainer
-
     var body: some View {
         TabView {
-            NewsNavigation.screen(
-                newsRepository: container.newsRepository,
-                favoritesRepository: container.favoritesRepository
-            )
-            .tabItem { NewsNavigation.tabItem }
+            NewsNavigation.screen()
+                .tabItem { NewsNavigation.tabItem }
 
-            FavoritesNavigation.screen(favoritesRepository: container.favoritesRepository)
+            FavoritesNavigation.screen()
                 .tabItem { FavoritesNavigation.tabItem }
 
-            SettingsNavigation.screen(
-                authRepository: container.authRepository,
-                userDataRepository: container.userDataRepository
-            )
-            .tabItem { SettingsNavigation.tabItem }
+            SettingsNavigation.screen()
+                .tabItem { SettingsNavigation.tabItem }
 
             NavigationDemoNavigation.screen()
                 .tabItem { NavigationDemoNavigation.tabItem }

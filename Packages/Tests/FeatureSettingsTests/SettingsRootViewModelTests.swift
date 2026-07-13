@@ -1,4 +1,5 @@
 import XCTest
+import Dependencies
 import CoreModel
 import CoreTesting
 @testable import FeatureSettings
@@ -8,7 +9,11 @@ final class SettingsRootViewModelTests: XCTestCase {
     func testObservesInitialLoggedInUser() async throws {
         let user = User(id: "1", name: "Taro Yamada", email: "taro@example.com")
         let userDataRepository = FakeUserDataRepository(initialUser: user)
-        let viewModel = SettingsRootViewModel(userDataRepository: userDataRepository)
+        let viewModel = withDependencies {
+            $0.userDataRepository = userDataRepository
+        } operation: {
+            SettingsRootViewModel()
+        }
 
         try await Task.sleep(nanoseconds: 50_000_000)
 
@@ -18,7 +23,11 @@ final class SettingsRootViewModelTests: XCTestCase {
     func testLogoutClearsCurrentUser() async throws {
         let user = User(id: "1", name: "Taro Yamada", email: "taro@example.com")
         let userDataRepository = FakeUserDataRepository(initialUser: user)
-        let viewModel = SettingsRootViewModel(userDataRepository: userDataRepository)
+        let viewModel = withDependencies {
+            $0.userDataRepository = userDataRepository
+        } operation: {
+            SettingsRootViewModel()
+        }
         try await Task.sleep(nanoseconds: 50_000_000)
 
         viewModel.logout()

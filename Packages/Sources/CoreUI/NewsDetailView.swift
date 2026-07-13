@@ -1,17 +1,12 @@
 import SwiftUI
 import CoreModel
-import CoreRepository
 import CoreDesignSystem
 
 public struct NewsDetailView: View {
     @StateObject private var viewModel: NewsDetailViewModel
 
-    public init(article: NewsArticle, isFavorite: Bool, favoritesRepository: FavoritesRepository) {
-        _viewModel = StateObject(wrappedValue: NewsDetailViewModel(
-            article: article,
-            isFavorite: isFavorite,
-            favoritesRepository: favoritesRepository
-        ))
+    public init(article: NewsArticle, isFavorite: Bool) {
+        _viewModel = StateObject(wrappedValue: NewsDetailViewModel(article: article, isFavorite: isFavorite))
     }
 
     public var body: some View {
